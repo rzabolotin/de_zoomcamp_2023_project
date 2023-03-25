@@ -1,4 +1,5 @@
 import json
+import os
 from csv import DictWriter
 from pathlib import Path
 
@@ -13,7 +14,8 @@ class DataSaver:
 
         self.file_type = file_type
         self.need_ravel = need_ravel
-        self.base_path = Path("../../data")
+        self.base_path = Path("data")
+        os.makedirs(self.base_path, exist_ok=True)
 
     def save(self, data: list, path: str):
         if self.need_ravel:

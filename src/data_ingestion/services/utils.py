@@ -7,6 +7,16 @@ def ravel(data: list):
         dict_keys = [key for key in row if type(row[key]) == dict]
         for dict_key in dict_keys:
             for valKey, value in row[dict_key].items():
+                if dict_key == "organization" and valKey != "_id":
+                    continue
+                if dict_key in [
+                    "address",
+                    "image",
+                    "locale",
+                    "mapPosition",
+                    "schedule",
+                ]:
+                    continue
                 row[dict_key + "_" + valKey] = value
             del row[dict_key]
             modified = True

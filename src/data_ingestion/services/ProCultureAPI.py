@@ -1,5 +1,6 @@
 import logging
 import os
+from datetime import datetime
 from typing import Union
 
 import requests
@@ -16,7 +17,7 @@ class ProCultureAPI:
             raise Exception("Not found API KEY for culture.ru")
 
         self.limit = 100
-        self.test_count = 300
+        self.test_count = 0
 
     def _get_data(
         self, method: str, params: Union[dict, None] = None
@@ -53,6 +54,7 @@ class ProCultureAPI:
 
     def get_organizations(self):
         """Get organizations list"""
+        method_name = "organizations"
         fields = [
             "_id",
             "createDate",
@@ -72,40 +74,199 @@ class ProCultureAPI:
             "status",
             "ratingRegion",
             "isPushkaRequested",
-            "organizationTypes" "hasCinemaTerminal",
+            "organizationTypes",
+            "hasCinemaTerminal",
         ]
 
         params = {"fields": ",".join(fields), "limit": self.limit, "offset": 0}
 
-        raw_data = self._get_data("organizations", params)
-        if not raw_data or "organizations" not in raw_data:
-            raise Exception("Organizations not found in API answer")
+        raw_data = self._get_data(method_name, params)
+        if not raw_data or method_name not in raw_data:
+            raise Exception("Empty API answer")
 
         total = raw_data["total"]
 
-        logger.info(
-            f'Load first {len(raw_data["organizations"])} organizations from {total}'
-        )
+        logger.info(f"Load first {len(raw_data[method_name])} rows from {total}")
 
         carry = []
-        carry.extend(raw_data["organizations"])
+        carry.extend(raw_data[method_name])
         params["offset"] += self.limit
 
         err_counter = 0
         if self.test_count:
-            logging.warning("ProCultureAPi in TEST MODE, got only 2000 records")
+            logging.warning(
+                f"ProCultureAPi in TEST MODE, got only {self.test_count} records"
+            )
             total = self.test_count
 
         while params["offset"] <= total:
-            raw_data = self._get_data("organizations", params)
-            if not raw_data or "organizations" not in raw_data:
+            raw_data = self._get_data(method_name, params)
+            if not raw_data or method_name not in raw_data:
                 logger.warning("Got empty result from API")
                 err_counter += 1
                 if err_counter < 5:
                     continue
                 raise Exception("Got 5 empty response in a raw")
 
-            carry.extend(raw_data["organizations"])
+            carry.extend(raw_data[method_name])
+            params["offset"] += self.limit
+
+        return carry
+
+    def get_locales(self):
+        """Get locales"""
+        method_name = "locales"
+        fields = ["_id", "name", "timezone", "parentId", "fias", "population", "stats"]
+
+        params = {"fields": ",".join(fields), "limit": self.limit, "offset": 0}
+
+        raw_data = self._get_data(method_name, params)
+        if not raw_data or method_name not in raw_data:
+            raise Exception("Empty API answer")
+
+        total = raw_data["total"]
+
+        logger.info(f"Load first {len(raw_data[method_name])} rows from {total}")
+
+        carry = []
+        carry.extend(raw_data[method_name])
+        params["offset"] += self.limit
+
+        err_counter = 0
+        if self.test_count:
+            logging.warning(
+                f"ProCultureAPi in TEST MODE, got only {self.test_count} records"
+            )
+            total = self.test_count
+
+        while params["offset"] <= total:
+            raw_data = self._get_data(method_name, params)
+            if not raw_data or method_name not in raw_data:
+                logger.warning("Got empty result from API")
+                err_counter += 1
+                if err_counter < 5:
+                    continue
+                raise Exception("Got 5 empty response in a raw")
+
+            carry.extend(raw_data[method_name])
+            params["offset"] += self.limit
+
+        return carry
+
+    def get_tags(self):
+        """Get tags list"""
+        method_name = "tags"
+
+        params = {"limit": self.limit, "offset": 0}
+
+        raw_data = self._get_data(method_name, params)
+        if not raw_data or method_name not in raw_data:
+            raise Exception("Empty API answer")
+
+        total = raw_data["total"]
+
+        logger.info(f"Load first {len(raw_data[method_name])} rows from {total}")
+
+        carry = []
+        carry.extend(raw_data[method_name])
+        params["offset"] += self.limit
+
+        err_counter = 0
+        if self.test_count:
+            logging.warning(
+                f"ProCultureAPi in TEST MODE, got only {self.test_count} records"
+            )
+            total = self.test_count
+
+        while params["offset"] <= total:
+            raw_data = self._get_data(method_name, params)
+            if not raw_data or method_name not in raw_data:
+                logger.warning("Got empty result from API")
+                err_counter += 1
+                if err_counter < 5:
+                    continue
+                raise Exception("Got 5 empty response in a raw")
+
+            carry.extend(raw_data[method_name])
+            params["offset"] += self.limit
+
+        return carry
+
+    def get_events(self, start_chunk: int, end_chunk: int):
+        """Get events list"""
+        method_name = "events"
+
+        fields = [
+            "_id",
+            "name",
+            "ageRestriction",
+            "tags",
+            "isFree",
+            "price",
+            "maxPrice",
+            "places",
+            "responsible",
+            "benefits",
+            "needCheck",
+            "status",
+            "updateDate",
+            "start",
+            "end",
+            "isAccesible",
+            "createDate",
+            "isAccepted",
+            "accepteDate",
+            "categoryName",
+            "organization",
+            "extraField",
+            "organizerPlace",
+            "isPushkinsCard",
+            "pushkeExpertType",
+            "releaseDate",
+            "genres",
+            "countries",
+            "statusPushka",
+            "hasCinemaTerminal",
+        ]
+
+        logger.info(f"Load events from {start_chunk} to {end_chunk}")
+
+        params = {
+            "fields": ",".join(fields),
+            "start": datetime(2021, 1, 1).timestamp() * 1000,
+            "limit": self.limit,
+            "offset": start_chunk,
+        }
+
+        raw_data = self._get_data(method_name, params)
+        if not raw_data or method_name not in raw_data:
+            raise Exception("Empty API answer")
+
+        total = raw_data["total"]
+
+        logger.info(f"Load first {len(raw_data[method_name])} rows from {total}")
+
+        carry = []
+        carry.extend(raw_data[method_name])
+        params["offset"] += self.limit
+
+        err_counter = 0
+        if self.test_count:
+            logging.warning(
+                f"ProCultureAPi in TEST MODE, got only {self.test_count} records"
+            )
+            total = params["offset"] + self.test_count
+
+        while params["offset"] <= total and params["offset"] <= end_chunk:
+            raw_data = self._get_data(method_name, params)
+            if not raw_data or method_name not in raw_data:
+                logger.warning("Got empty result from API")
+                err_counter += 1
+                if err_counter < 5:
+                    continue
+                raise Exception("Got 5 empty response in a raw")
+
+            carry.extend(raw_data[method_name])
             params["offset"] += self.limit
 
         return carry
