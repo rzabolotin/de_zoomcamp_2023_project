@@ -29,5 +29,10 @@ I ingested the following information:
 1. Python as main programming language
 2. Google Cloud Platform (GCP)
 3. Prefect as ETL orchestrator
+4. Poetry as dependency manager
+
+linters
+tests
+add pre-commit hooks
 
 
