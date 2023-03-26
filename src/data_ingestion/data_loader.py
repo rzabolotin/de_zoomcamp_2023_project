@@ -2,6 +2,7 @@ import argparse
 
 from loguru import logger
 from services.DataExtractor import DataExtractor
+from services.DataLoader import DataLoader
 from services.DataSaver import DataSaver
 from services.ProCultureAPI import ProCultureAPI
 from services.utils import transform_date
@@ -58,6 +59,16 @@ def main(params: argparse.Namespace) -> None:
         dataSaver.save(event_seances, "event_seances_" + suffix)
         dataSaver.save(event_place_locales, "event_place_locales" + suffix)
 
+    elif params.type[0] == "combine":
+        file_prefix = params.file_prefix
+
+        if not file_prefix:
+            logger.error("File prefix is required")
+            return
+
+        data_loader = DataLoader()
+        data_loader.load_csv(file_prefix + "_*.csv")
+        dataSaver.save(data_loader.data, file_prefix)
     else:
         logger.error("Unknown type")
         return
@@ -68,10 +79,14 @@ def main(params: argparse.Namespace) -> None:
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
-        "type", type=str, nargs=1, choices=["events", "orgs", "locales", "tags"]
+        "type",
+        type=str,
+        nargs=1,
+        choices=["events", "orgs", "locales", "tags", "combine"],
     )
     arg_parser.add_argument("--start_chunk", type=int, default=0)
     arg_parser.add_argument("--end_chunk", type=int, default=100000)
+    arg_parser.add_argument("--file_prefix", type=str)
 
     args = arg_parser.parse_args()
     main(args)
