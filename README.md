@@ -1,13 +1,27 @@
 # de_zoomcamp_2023_project
 
-My data engineering project at DataTalks zoomcamp course (2023 cohort)
+Data engineering project at [DataTalks zoomcamp course](https://github.com/DataTalksClub/data-engineering-zoomcamp) 
+Cohort January 2023 - March 2023
+Student: Roman Zabolotin
 
 ## Project description and dataset
+There is platform [culture.ru](https://pro.culture.ru/new/api/documentation/export) with API. It contains information about events in the field of culture for the period from Jan 2021 to March 2023.  
+In this project I used this data and made an ETL pipeline for it.
+In this project I've made data warehouse with data from this API, and made data visualization with it.
 
-In this project I user data from [Culture.ru service](https://pro.culture.ru/new/api/documentation/export).  
-It contains information about cultural events in Russia (the data is updated daily).
+The main goal of this project is to get experience in data engineering and data visualization.  
+The secondary goal is to find main trends in the field of culture in Russia.
 
-I ingested the following information:
+## Clouds
+- Description
+- terraform script
+
+## Data ingestion
+- Description
+- Orchestration
+- Docker (remove poetry)
+
+I've ingested the following information from API:
 - Events
 - Places
 - Organizations
@@ -15,24 +29,23 @@ I ingested the following information:
 - Tags
 - Locations
 
-## Project plan
+To ingest data I write [the script](src/data_ingestion/data_loader.py)  
+Run it in orchestration tool (Prefect) with [the flow](src/data_ingestion/flow.py)
 
-1. Step 1. Extract data from API
-2. Step 2. Clean and store data in Google Cloud Storage
-3. Step 3. Load data to BigQuery
-4. Step 4. Make datamart (dbt)
-5. Step 5. Make data visualization (Superset)
+## Loading to DWH
+- Spark
+- Orchestration
 
+## Transformation
+- Dbt
+- Orchestration Dbt run
 
-## Used technologies
+## Data visualization
+- Superset
+- Looker
 
-1. Python as main programming language
-2. Google Cloud Platform (GCP)
-3. Prefect as ETL orchestrator
-4. Poetry as dependency manager
-
-linters
-tests
-add pre-commit hooks
+## Additional
+- Tests
+- CI/CD
 
 
