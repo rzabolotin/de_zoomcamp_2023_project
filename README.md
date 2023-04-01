@@ -1,6 +1,6 @@
 # de_zoomcamp_2023_project
 
-Data engineering project at [DataTalks zoomcamp course](https://github.com/DataTalksClub/data-engineering-zoomcamp)   
+My project at [DataTalks Data Engineering zoomcamp course](https://github.com/DataTalksClub/data-engineering-zoomcamp)   
 Cohort: **January 2023 - March 2023**  
 Student: **Roman Zabolotin**
 
