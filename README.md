@@ -5,13 +5,18 @@ Cohort: **January 2023 - March 2023**
 Student: **Roman Zabolotin**
 
 ## Project description and dataset
-There is a platform [culture.ru](https://pro.culture.ru/new/api/documentation/export) with API. It contains information about events in the field of culture for the period from Jan 2021 to March 2023.  
+There is a platform [culture.ru](https://pro.culture.ru) with API. It contains information about events in the field of culture for the period from Jan 2021 to March 2023.  
 In this project I use this data for making ETL pipelines, moving data to data warehouse and visualization.
 
 The main goal of this project is to get hands-on experience in data engineering.   
 The secondary goal is to find main trends in the field of culture in Russia.
 
-## Clouds
+![img.png](media/cultura_logo.png)
+
+## Cloud platform
+
+![img.png](media/gcloud_logo.png)
+
 In this project I use [Google Cloud Platform](https://cloud.google.com/)  
 
 Services:
@@ -21,8 +26,8 @@ Services:
   - [Looker](https://looker.com/)
 
 ### Terraform
-I've used terraform to create infrastructure in GCP.  
-My terraform code is [here](terraform)
+I use terraform to create infrastructure in GCP.  
+My terraform code is presented [here](terraform)
 
 To deploy terraform project you need to run following steps:
 1. Authenticate to GCP
