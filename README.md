@@ -7,7 +7,8 @@ Student: **Roman Zabolotin**
 ## Project description and dataset
 ![img.png](media/cultura_logo.png)
 
-There is a platform [culture.ru](https://pro.culture.ru) with API. It contains information about events in the field of culture for the period from Jan 2021 to March 2023.  
+I found data for project at platform **[culture.ru](https://pro.culture.ru)** with an API access.  
+It contains information about events in the field of culture for the period from Jan 2021 to March 2023.
 In this project I use this data for making ETL pipelines, moving data to data warehouse and visualization.
 
 The main goal of this project is to get hands-on experience in data engineering.   
