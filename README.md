@@ -12,7 +12,7 @@ The main goal of this project is to get hands-on experience in data engineering.
 The secondary goal is to find main trends in the field of culture in Russia.
 
 ## Clouds
-In this project I used [Google Cloud Platform](https://cloud.google.com/)  
+In this project I use [Google Cloud Platform](https://cloud.google.com/)  
 
 Services:
   - [Google Cloud Storage](https://cloud.google.com/storage)
