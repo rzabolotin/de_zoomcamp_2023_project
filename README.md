@@ -35,10 +35,7 @@ To deploy terraform project you need to run following steps:
 ```bash
 gcloud auth application-default login
 ```
-
 2. Fill `terraform.tfvars` file (you can use terraform.tfvars.example as example)
-
-
 3. Run terraform
 ```bash
 terraform init
@@ -51,20 +48,20 @@ It will create:
 
 
 ## Data ingestion
-- Description
-- Orchestration
-- Docker (remove poetry)
+To collect data I use [API](https://pro.culture.ru/api/v1/docs/) of platform **[culture.ru](https://pro.culture.ru)**  
+I've written a special script to collect data from that API.  
+Then I've used [Prefect](https://www.prefect.io/) to orchestrate the process of data ingestion.
 
-I've ingested the following information from API:
-- Events
-- Places
-- Organizations
-- Categories
-- Tags
-- Locations
+The result is a set of parquet files in GCS bucket.
 
-To ingest data I write [the script](src/data_ingestion/data_loader.py)  
-Run it in orchestration tool (Prefect) with [the flow](src/data_ingestion/flow.py)
+The scripts for data ingestion are presented [here](data_ingestion). 
+
+I use:
+- [Poetry](https://python-poetry.org/) to manage dependencies
+- [Prefect](https://www.prefect.io/) to orchestrate data ingestion
+
+
+
 
 ## Loading to DWH
 - Spark
