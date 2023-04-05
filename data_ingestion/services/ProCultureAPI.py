@@ -34,7 +34,7 @@ class ProCultureAPI:
 
         params["apiKey"] = self.api_key
 
-        logger.debug(f"Getting data for {method} offset {params.get('offset')}")
+        logger.info(f"Getting data for {method} offset {params.get('offset')}")
 
         try:
             data = requests.get(url, params).json()
@@ -95,7 +95,7 @@ class ProCultureAPI:
         err_counter = 0
         if self.test_count:
             logging.warning(
-                f"ProCultureAPi in TEST MODE, got only {self.test_count} records"
+                f"ProCultureAPI in TEST MODE, got only {self.test_count} records"
             )
             total = self.test_count
 
