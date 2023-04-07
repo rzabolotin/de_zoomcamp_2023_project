@@ -1,6 +1,9 @@
+import os.path
+
 from loguru import logger
 from prefect import flow, task
 from prefect_gcp import GcsBucket
+from services.BigQueryLoader import load_to_bigquery
 from services.DataExtractor import DataExtractor
 from services.DataSaver import DataSaver
 from services.ProCultureAPI import ProCultureAPI
@@ -10,8 +13,6 @@ from utils import enable_loguru_support
 api = ProCultureAPI()
 data_saver = DataSaver(file_type="parquet")
 gcs_data_lake = GcsBucket.load("gcs-data-lake")
-
-# https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#python
 
 
 @task(name="Loading organizations from API")
@@ -37,7 +38,14 @@ def save_table(data, filename):
 
 @task(name="Move file to GCS")
 def save_to_gcp(path: str) -> None:
-    gcs_data_lake.upload_from_path(from_path=path, to_path=path)
+    to_path = os.path.basename(path)
+    gcs_data_lake.upload_from_path(from_path=path, to_path=to_path)
+    return to_path
+
+
+@task(name="Load table to BigQuery")
+def load_to_bq(path: str, table_name: str) -> str:
+    return load_to_bigquery(table_name, path)
 
 
 @flow(name="Load organizations")
@@ -48,10 +56,13 @@ def orgs_flow():
     org_locales = extract_locales_from_orgs(orgs_data)
 
     orgs_file = save_table(orgs_data, "organizations")
-    locales_file = save_table(org_locales, "organization_locales")
+    orgs_path = save_to_gcp(orgs_file)
+    load_to_bq(orgs_path, "organizations")
 
-    save_to_gcp(orgs_file)
-    save_to_gcp(locales_file)
+    locales_file = save_table(org_locales, "organization_locales")
+    locales_path = save_to_gcp(locales_file)
+    load_to_bq(locales_path, "organization_locales")
+
 
 
 if __name__ == "__main__":
