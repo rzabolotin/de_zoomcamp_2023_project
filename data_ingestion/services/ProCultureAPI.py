@@ -257,7 +257,7 @@ class ProCultureAPI:
             )
             total = params["offset"] + self.test_count
 
-        while params["offset"] <= total and params["offset"] <= end_chunk:
+        while params["offset"] <= total and params["offset"] < end_chunk:
             raw_data = self._get_data(method_name, params)
             if not raw_data or method_name not in raw_data:
                 logger.warning("Got empty result from API")
@@ -270,3 +270,21 @@ class ProCultureAPI:
             params["offset"] += self.limit
 
         return carry
+
+    def get_events_count(self):
+        """Get count of events"""
+        method_name = "events"
+
+        params = {
+            "fields": "id",
+            "start": datetime(2021, 1, 1).timestamp() * 1000,
+            "limit": 1
+        }
+
+        raw_data = self._get_data(method_name, params)
+        if not raw_data or method_name not in raw_data:
+            raise Exception("Empty API answer")
+
+        total = raw_data["total"]
+
+        return total

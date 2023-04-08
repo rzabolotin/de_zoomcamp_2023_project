@@ -23,6 +23,9 @@ class DataSaver:
     def save(self, data: list, path: str):
         if self.need_ravel:
             ravel(data)
+        if len(data) == 0:
+            logger.warning("No data to save")
+            return None
 
         logger.info(f"Saving to ... {os.path.abspath(path)}")
 

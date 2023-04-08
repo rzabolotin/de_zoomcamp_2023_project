@@ -22,5 +22,5 @@ def save_to_gcp(path: str) -> None:
 
 
 @task(name="Load table to BigQuery")
-def load_to_bq(path: str, table_name: str) -> str:
-    return load_to_bigquery(table_name, path)
+def load_to_bq(path: str, table_name: str, clean_table: bool = True) -> str:
+    return load_to_bigquery(table_name, path, clean_table=clean_table)
