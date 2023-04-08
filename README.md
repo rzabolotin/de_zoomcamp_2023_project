@@ -79,7 +79,7 @@ The resulted list of tables in BigQuery is:
 - organizations
 - organization_locales
 
-**More information about data ingestion you can find [here](data_ingestion/README.md)**
+**More information about data ingestion you can find [here](data_ingestion/README.MD)**
 
 
 
