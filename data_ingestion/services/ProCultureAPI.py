@@ -13,9 +13,6 @@ class ProCultureAPI:
     def __init__(self):
         self.base_url = "https://pro.culture.ru/api/2.5/"
         self.api_key = os.environ.get("CULTURE_API_KEY", None)
-        if "CULTURE_API_KEY" not in os.environ:
-            raise Exception("Not found API KEY for culture.ru")
-
         self.limit = 100
         self.test_count = 0
 
@@ -278,7 +275,7 @@ class ProCultureAPI:
         params = {
             "fields": "id",
             "start": datetime(2021, 1, 1).timestamp() * 1000,
-            "limit": 1
+            "limit": 1,
         }
 
         raw_data = self._get_data(method_name, params)

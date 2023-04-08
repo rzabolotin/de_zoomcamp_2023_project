@@ -3,8 +3,12 @@ from prefect import flow, task
 from services.DataExtractor import DataExtractor
 from services.prefect_tasks import load_to_bq, save_table, save_to_gcp
 from services.ProCultureAPI import ProCultureAPI
-from services.utils import transform_date
-from utils import enable_loguru_support
+from services.utils import (
+    transform_date,
+    enable_loguru_support,
+    check_environment_cultura_api,
+    check_environment_google_cloud,
+)
 
 api = ProCultureAPI()
 
@@ -28,6 +32,8 @@ def extract_locales_from_orgs(orgs_data):
 @flow(name="Load organizations")
 def orgs_flow():
     enable_loguru_support()
+    check_environment_cultura_api()
+    check_environment_google_cloud()
 
     orgs_data = get_data_from_api()
     org_locales = extract_locales_from_orgs(orgs_data)

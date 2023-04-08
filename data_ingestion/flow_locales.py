@@ -2,7 +2,11 @@ from loguru import logger
 from prefect import flow, task
 from services.prefect_tasks import load_to_bq, save_table, save_to_gcp
 from services.ProCultureAPI import ProCultureAPI
-from utils import enable_loguru_support
+from services.utils import (
+    enable_loguru_support,
+    check_environment_cultura_api,
+    check_environment_google_cloud,
+)
 
 api = ProCultureAPI()
 
@@ -16,6 +20,8 @@ def get_data_from_api():
 @flow(name="Load locales")
 def locales_flow():
     enable_loguru_support()
+    check_environment_cultura_api()
+    check_environment_google_cloud()
 
     locales_data = get_data_from_api()
     locales_file = save_table(locales_data, "locales")

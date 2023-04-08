@@ -5,17 +5,6 @@ from loguru import logger
 
 bigquery_client = bigquery.Client()
 
-if any(
-    [
-        env not in os.environ
-        for env in [
-            "GOOGLE_PROJECT_ID",
-            "GOOGLE_BQ_DATASET",
-            "GOOGLE_DATA_LAKE_BUCKET_NAME",
-        ]
-    ]
-):
-    raise Exception("Not found environment variables for Google cloud")
 
 GOOGLE_PROJECT_ID = os.environ.get("GOOGLE_PROJECT_ID")
 BQ_DATASET = os.environ.get("GOOGLE_BQ_DATASET")

@@ -3,14 +3,18 @@ from prefect import flow, task
 from services.DataExtractor import DataExtractor
 from services.prefect_tasks import load_to_bq, save_table, save_to_gcp
 from services.ProCultureAPI import ProCultureAPI
-from services.utils import transform_date
-from utils import enable_loguru_support
+from services.utils import (
+    transform_date,
+    enable_loguru_support,
+    check_environment_cultura_api,
+    check_environment_google_cloud,
+)
 
 api = ProCultureAPI()
 
 
 @task(name="Loading events from API")
-def get_data_from_api(start_chunk:int, end_chunk:int):
+def get_data_from_api(start_chunk: int, end_chunk: int):
     logger.info(f"Start loader {start_chunk} - {end_chunk}")
     return api.get_events(start_chunk, end_chunk)
 
@@ -35,9 +39,8 @@ def extract_locales_from_places(orgs_places):
     return DataExtractor.extract_locales_from_places(orgs_places)
 
 
-
 @flow(name="Load events by chunks")
-def events_chunk_flow(start_chunk:int, end_chunk:int):
+def events_chunk_flow(start_chunk: int, end_chunk: int):
     enable_loguru_support()
 
     suffix = f"{start_chunk}-{end_chunk}"
@@ -54,26 +57,26 @@ def events_chunk_flow(start_chunk:int, end_chunk:int):
     )
     event_seances = transform_date(event_seances, ["start", "end"])
 
-    events_data = save_table(events_data, "events_"+suffix)
+    events_data = save_table(events_data, "events_" + suffix)
     events_path = save_to_gcp(events_data)
     load_to_bq(events_path, "events", clean_table=clean_table)
 
-    file = save_table(event_tags, "event_tags_"+suffix)
+    file = save_table(event_tags, "event_tags_" + suffix)
     if file:
         path = save_to_gcp(file)
         load_to_bq(path, "event_tags", clean_table=clean_table)
 
-    file = save_table(event_places, "event_places_"+suffix)
+    file = save_table(event_places, "event_places_" + suffix)
     if file:
         path = save_to_gcp(file)
         load_to_bq(path, "event_places", clean_table=clean_table)
 
-    file = save_table(event_seances, "event_seances_"+suffix)
+    file = save_table(event_seances, "event_seances_" + suffix)
     if file:
         path = save_to_gcp(file)
         load_to_bq(path, "event_seances", clean_table=clean_table)
 
-    file = save_table(event_locales, "event_locales_"+suffix)
+    file = save_table(event_locales, "event_locales_" + suffix)
     if file:
         path = save_to_gcp(file)
         load_to_bq(path, "event_locales")
@@ -81,12 +84,14 @@ def events_chunk_flow(start_chunk:int, end_chunk:int):
 
 @flow(name="Load events")
 def events_flow():
+    check_environment_cultura_api()
+    check_environment_google_cloud()
     max_events = api.get_events_count()
     logger.info(f"Max events: {max_events}")
     chuk_size = 1000
 
     for i in range(0, max_events, chuk_size):
-        events_chunk_flow(i, i+chuk_size)
+        events_chunk_flow(i, i + chuk_size)
 
 
 if __name__ == "__main__":

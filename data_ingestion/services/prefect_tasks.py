@@ -6,7 +6,6 @@ from services.big_query import load_to_bigquery
 from services.DataSaver import DataSaver
 
 data_saver = DataSaver(file_type="parquet")
-gcs_data_lake = GcsBucket.load("gcs-data-lake")
 
 
 @task(name="Saving table")
@@ -17,6 +16,7 @@ def save_table(data, filename):
 @task(name="Move file to GCS")
 def save_to_gcp(path: str) -> None:
     to_path = os.path.basename(path)
+    gcs_data_lake = GcsBucket.load("gcs-data-lake")
     gcs_data_lake.upload_from_path(from_path=path, to_path=to_path)
     return to_path
 

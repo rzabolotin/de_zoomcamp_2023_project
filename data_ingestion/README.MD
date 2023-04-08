@@ -15,10 +15,12 @@ You can load following information from API:
 - Events (`events`)
 - Organizations (`orgs`)
 - Locations (`locales`)
-- List of event tags (`tags`)
 
 ## Orchestration
 I use [Prefect](https://www.prefect.io/) to orchestrate data ingestion.  
 I've created deployment script that encapsulates all the logic of data ingestion, and sends files it to GCS Bucket.
+
+## Used prefect blocks
+- You need to add block 
 
 
