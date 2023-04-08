@@ -88,7 +88,7 @@ def events_flow():
     check_environment_google_cloud()
     max_events = api.get_events_count()
     logger.info(f"Max events: {max_events}")
-    chuk_size = 1000
+    chuk_size = 10000
 
     for i in range(0, max_events, chuk_size):
         events_chunk_flow(i, i + chuk_size)
