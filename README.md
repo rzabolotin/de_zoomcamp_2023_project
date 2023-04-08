@@ -23,11 +23,10 @@ In this project I use [Google Cloud Platform](https://cloud.google.com/)
 Services:
   - [Google Cloud Storage](https://cloud.google.com/storage)
   - [BigQuery](https://cloud.google.com/bigquery)
-  - [Dataproc](https://cloud.google.com/dataproc)
   - [Looker](https://looker.com/)
 
 ### Terraform
-I use terraform to create infrastructure in GCP.  
+I used terraform to create infrastructure in GCP.  
 My terraform code is presented [here](terraform)
 
 To deploy terraform project you need to run following steps:
@@ -47,25 +46,44 @@ It will create:
 - BigQuery dataset
 
 
-## Data ingestion
+## Data ingestion and loading to DWH
 To collect data I use [API](https://pro.culture.ru/api/v1/docs/) of platform **[culture.ru](https://pro.culture.ru)**  
 I've written a special script to collect data from that API.  
 Then I've used [Prefect](https://www.prefect.io/) to orchestrate the process of data ingestion.
 
-The result is a set of parquet files in GCS bucket.
+I've gather data from 3 endpoint from API:
+- events
+- locations
+- organizations
 
-The scripts for data ingestion are presented [here](data_ingestion). 
+For each method I've created a separate flow in Prefect.
 
-I use:
-- [Poetry](https://python-poetry.org/) to manage dependencies
-- [Prefect](https://www.prefect.io/) to orchestrate data ingestion
-
+Example of flow diagram for events endpoint:
+![img.png](media/prefect_flow.png)
 
 
+Each flow has 4 main tasks:
+- **get_data** - get data from API
+- **save_to_parquet** - save data in parquet format
+- **upload_to_gcs** - upload data to GCS
+- **load_to_bq** - load data to BigQuery
 
-## Loading to DWH
-- Spark
-- Orchestration
+Some flows make more than one table in BigQuery.  
+The resulted list of tables in BigQuery is:
+- events
+- event_tags
+- event_places
+- event_locales
+- event_seances
+- locales
+- organizations
+- organization_locales
+
+**More information about data ingestion you can find [here](data_ingestion/README.md)**
+
+
+
+
 
 ## Transformation
 - Dbt
