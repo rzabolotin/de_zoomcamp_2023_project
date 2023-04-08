@@ -27,7 +27,7 @@ Services:
 
 ### Terraform
 I used terraform to create infrastructure in GCP.  
-My terraform code is presented [here](terraform)
+My terraform code is presented [here](terraform/main.tf)
 
 To deploy terraform project you need to run following steps:
 1. Authenticate to GCP
@@ -51,7 +51,7 @@ To collect data I use [API](https://pro.culture.ru/api/v1/docs/) of platform **[
 I've written a special script to collect data from that API.  
 Then I've used [Prefect](https://www.prefect.io/) to orchestrate the process of data ingestion.
 
-I've gather data from 3 endpoint from API:
+It gathers data from 3 API methods:
 - events
 - locations
 - organizations
@@ -63,7 +63,7 @@ Example of flow diagram for events endpoint:
 
 
 Each flow has 4 main tasks:
-- **get_data** - get data from API
+- **load_data** - get data from API
 - **save_to_parquet** - save data in parquet format
 - **upload_to_gcs** - upload data to GCS
 - **load_to_bq** - load data to BigQuery
@@ -82,9 +82,6 @@ The resulted list of tables in BigQuery is:
 **More information about data ingestion you can find [here](data_ingestion/README.MD)**
 
 
-
-
-
 ## Transformation
 - Dbt
 - Orchestration Dbt run
@@ -92,14 +89,3 @@ The resulted list of tables in BigQuery is:
 ## Data visualization
 - Superset
 - Looker
-
-## Additional
-- Tests
-- CI/CD
-- Scheme of pipeline
-
-
-> To load environment from your .env file run:
-```bash
-export $(cat .env | xargs)
-```
