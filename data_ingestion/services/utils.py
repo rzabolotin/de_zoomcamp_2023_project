@@ -93,7 +93,7 @@ def enable_loguru_support() -> None:
 def check_environment_google_cloud():
     required_env = [
         "GOOGLE_PROJECT_ID",
-        "GOOGLE_BQ_DATASET",
+        "GOOGLE_BQ_STAGE_DATASET",
         "GOOGLE_DATA_LAKE_BUCKET_NAME",
     ]
 

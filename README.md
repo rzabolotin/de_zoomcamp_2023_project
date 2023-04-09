@@ -90,9 +90,6 @@ In [this flow](data_ingestion/flow_optimization.py) I run bigquery queries to ma
 ![img.png](media/big_query_partitioning.png)
 
 
-
-
-
 ## Transformation
 - Dbt
 - Orchestration Dbt run
