@@ -42,7 +42,13 @@ resource "google_storage_bucket" "data-lake-bucket" {
 # Data Warehouse
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset
 resource "google_bigquery_dataset" "dataset" {
-  dataset_id = var.BQ_DATASET
+  dataset_id = var.BQ_STAGE_DATASET
+  project    = var.PROJECT_ID
+  location   = var.REGION
+}
+
+resource "google_bigquery_dataset" "dataset_prod" {
+  dataset_id = var.BQ_PROD_DATASET
   project    = var.PROJECT_ID
   location   = var.REGION
 }

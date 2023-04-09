@@ -19,7 +19,12 @@ variable "DATA_LAKE_BUCKET_NAME" {
   type = string
 }
 
-variable "BQ_DATASET" {
+variable "BQ_STAGE_DATASET" {
   description = "BigQuery Dataset that raw data (from GCS) will be written to"
+  type = string
+}
+
+variable "BQ_PROD_DATASET" {
+  description = "BigQuery Dataset that contains clean data (from BQ_STAGE_DATASET)"
   type = string
 }

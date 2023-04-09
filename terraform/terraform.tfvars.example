@@ -1,4 +1,5 @@
 PROJECT_ID            = "your_project_id"
 REGION                = "us"
 DATA_LAKE_BUCKET_NAME = "unique_bucket_name"
-BQ_DATASET            = "stage_dwh"
+BQ_STAGE_DATASET      = "stage_dwh"
+BQ_PROD_DATASET       = "prod_dwh"
