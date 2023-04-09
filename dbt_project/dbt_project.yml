@@ -17,4 +17,6 @@ models:
 
 vars:
   is_test_run: true
+  min_possible_start_date: Date('2010-01-01')
+  max_possible_end_date: Date('2030-01-01')
 

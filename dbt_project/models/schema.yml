@@ -83,7 +83,24 @@ models:
         tests:
           - not_null
       - name: subordination_name
-
+  - name: dim_locations
+    description: "Locations (regions) where events take place. Have some statistic data about region"
+    columns:
+      - name: _id
+        description: "Key field of location"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Name of location"
+        tests:
+          - not_null
+      - name: timezone
+        description: "Timezone of location"
+        tests:
+          - not_null
+      - name: stats_cinemas
+      - name: stats_cinamaHalls
 
 
 

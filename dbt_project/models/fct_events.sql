@@ -1,3 +1,12 @@
+{{ config(
+    materialized='table',
+    partition_by={
+      "field": "event_start",
+      "data_type": "date",
+      "granularity": "month"
+    }
+)}}
+
 WITH unique_events AS (SELECT
     *,
     row_number() over(partition by _id) as row_number
