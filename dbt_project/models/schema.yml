@@ -1,0 +1,89 @@
+version: 2
+
+sources:
+  - name: stage
+    schema: stage_dwh
+    tables:
+      - name: events_partitioned
+      - name: event_locales
+      - name: organizations
+      - name: locales
+
+models:
+  - name: fct_events
+    description: "Fact table of culture events in Russia"
+    columns:
+      - name: _id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Brief description of event"
+        tests:
+          - not_null
+      - name: isFree
+        description: "Flag that this event is free"
+      - name: ageRestriction
+        description: "Age restriction of event"
+        tests:
+          - not_null
+      - name: price
+        description: "Price of ticket"
+      - name: maxPrice
+        description: "Maximum ticket price"
+      - name: isPushkinsCard
+        description: "Flag that indicates than event is included in Pushkins card program"
+        tests:
+          - not_null
+      - name: event_start
+        description: "Start date of the event"
+        tests:
+          - not_null
+      - name: event_end
+        description: "End date of the event"
+        tests:
+          - not_null
+      - name: organization__id
+        description: "Id of organization, key for organizations table"
+
+  - name: lnk_event_locales
+    desctiption: "Link table between event and locations. Relations many to many"
+    columns:
+      - name: event_id
+        desctiption: "Key field of event"
+        tests:
+          - not_null
+      - name: locale_id
+        desctiption: "Key field of location"
+        tests:
+          - not_null
+  - name: dim_organizations
+    description: "Organizations than organize events"
+    columns:
+      - name: _id
+        description: "Key field of organization"
+        tests:
+          - unique
+          - not_null
+      - name: createDate
+        descripiton: "Date when this organizations was added to program"
+      - name: subordination
+      - name: type
+      - name: nameShort
+        description: "Short name of organization"
+        tests:
+          - not_null
+      - name: ticketsSold
+        description: "Amount of tickets that organization has sold"
+      - name: status
+      - name: category_name
+      - name: isPushkinsCard
+        description: "Flag that indicates than organization is included in Pushkins card program"
+        tests:
+          - not_null
+      - name: subordination_name
+
+
+
+

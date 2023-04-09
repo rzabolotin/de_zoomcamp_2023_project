@@ -1,0 +1,20 @@
+name: 'dbt_project'
+version: '1.0.0'
+config-version: 2
+
+profile: 'cultura_ru'
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt_project clean`
+  - "target"
+  - "dbt_packages"
+
+models:
+  +materialized: table
+
+vars:
+  is_test_run: true
+

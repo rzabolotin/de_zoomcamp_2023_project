@@ -93,9 +93,16 @@ In [this flow](data_ingestion/flow_optimization.py) I run bigquery queries to ma
 ![img.png](media/big_query_partitioning.png)
 
 
-## Transformation
-- Dbt
-- Orchestration Dbt run
+## Transformation, making data marts
+After the data is loaded to BigQuery I've made some transformations and created data marts using dbt.
+
+I've created 3 dbt models:
+- **events** - main fact table
+- **organizations** - dimension table
+- **locations** - dimension table
+
+The dbt project is presented [here](dbt_project/README.md)
+
 
 ## Data visualization
 - Superset
@@ -117,7 +124,7 @@ poetry install
 
 Beforehand you need to set environment variables, you can use .env.example as example
 ```bash
-export $(cat .env.example | xargs)
+export $(cat .env.example | xargs) #set environment variables from file .env.example
 ```
 
 After that you can run commands in poetry environment (some examples):
