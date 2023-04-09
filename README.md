@@ -81,6 +81,17 @@ The resulted list of tables in BigQuery is:
 
 **More information about data ingestion you can find [here](data_ingestion/README.MD)**
 
+## Optimizing data warehouse
+The biggest table in the project is **events** table.  So let's make partitioning for it.  
+After all data was loaded to BigQuery I've made one more flow in Prefect to optimize data warehouse.
+
+In [this flow](data_ingestion/flow_optimization.py) I run bigquery queries to make partitioning for **events** table.
+
+![img.png](media/big_query_partitioning.png)
+
+
+
+
 
 ## Transformation
 - Dbt

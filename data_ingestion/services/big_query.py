@@ -33,3 +33,27 @@ def load_to_bigquery(table_name: str, filepath: str, clean_table: bool = True) -
     logger.info(f"Loaded {destination_table.num_rows} rows.")
 
     return filepath
+
+
+def create_partition_table(new_table: str, source_table: str, partition_field: str):
+    dest = f"{GOOGLE_PROJECT_ID}.{BQ_DATASET}.{new_table}"
+    source = f"{GOOGLE_PROJECT_ID}.{BQ_DATASET}.{source_table}"
+
+    run_job = bigquery_client.query(
+        f"""
+        CREATE OR REPLACE TABLE `{dest}` 
+        PARTITION BY
+          `{partition_field}`
+        AS (
+        SELECT 
+            *
+          FROM 
+            `{source}` 
+        );
+        """
+    )
+
+    run_job.result()  # Waits for the job to complete.
+
+    destination_table = bigquery_client.get_table(dest)
+    logger.info(f"Created partitioned table with {destination_table.num_rows} rows.")

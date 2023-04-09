@@ -1,5 +1,5 @@
-from datetime import datetime
 import os
+from datetime import datetime
 
 from prefect import get_run_logger
 from prefect_gcp import GcsBucket
@@ -106,5 +106,3 @@ def check_environment_google_cloud():
 def check_environment_cultura_api():
     if "CULTURE_API_KEY" not in os.environ:
         raise Exception("Not found API KEY for culture.ru")
-
-

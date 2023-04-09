@@ -2,11 +2,9 @@ from loguru import logger
 from prefect import flow, task
 from services.prefect_tasks import load_to_bq, save_table, save_to_gcp
 from services.ProCultureAPI import ProCultureAPI
-from services.utils import (
-    enable_loguru_support,
-    check_environment_cultura_api,
-    check_environment_google_cloud,
-)
+from services.utils import (check_environment_cultura_api,
+                            check_environment_google_cloud,
+                            enable_loguru_support)
 
 api = ProCultureAPI()
 
