@@ -7,7 +7,7 @@ SELECT
     ticketsSold,
     status,
     category_name,
-    isPushkinsCard,
+    COALESCE(isPushkinsCard, FALSE) AS isPushkinsCard,
     subordination_name
 
 FROM
