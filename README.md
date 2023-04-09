@@ -81,6 +81,9 @@ The resulted list of tables in BigQuery is:
 
 **More information about data ingestion you can find [here](data_ingestion/README.MD)**
 
+Dashboard of Prefect server:
+![img.png](media/prefect_dashboard.png)
+
 ## Optimizing data warehouse
 The biggest table in the project is **events** table.  So let's make partitioning for it.  
 After all data was loaded to BigQuery I've made one more flow in Prefect to optimize data warehouse.
@@ -97,3 +100,30 @@ In [this flow](data_ingestion/flow_optimization.py) I run bigquery queries to ma
 ## Data visualization
 - Superset
 - Looker
+
+
+## Poetry
+I use [Poetry](https://python-poetry.org/) to manage dependencies in my project.  
+To install poetry you need to run following command:
+```bash
+pip install poetry
+```
+
+To install dependencies you need to run following command:
+```bash
+poetry install
+```
+
+
+Beforehand you need to set environment variables, you can use .env.example as example
+```bash
+export $(cat .env.example | xargs)
+```
+
+After that you can run commands in poetry environment (some examples):
+```bash
+poetry run python data_ingestion/flow_events.py # run events flow
+poetry run prefect orion start # start orion server
+poetry run prefect agent start -q default # start prefect agent
+poetry run prefect data_ingestion/make_deployments.py # make prefect deployments
+```

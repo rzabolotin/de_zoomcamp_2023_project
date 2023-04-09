@@ -1,0 +1,27 @@
+
+
+============================== 2023-04-09 02:58:15.362051 | 7086a94f-278f-49f7-a208-d3e76b200c0a ==============================
+[0m02:58:15.362051 [info ] [MainThread]: Running with dbt=1.4.5
+[0m02:58:15.364164 [debug] [MainThread]: running dbt with arguments {'write_json': True, 'use_colors': True, 'printer_width': 80, 'version_check': True, 'partial_parse': True, 'static_parser': True, 'profiles_dir': '/home/roman/.dbt', 'send_anonymous_usage_stats': True, 'quiet': False, 'no_print': False, 'cache_selected_only': False, 'skip_profile_setup': False, 'which': 'init', 'indirect_selection': 'eager'}
+[0m02:58:15.364616 [debug] [MainThread]: Tracking: tracking
+[0m02:58:15.380831 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f495ebf28e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f495b09e6a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f495b200520>]}
+[0m02:58:36.512572 [debug] [MainThread]: Starter project path: /home/roman/.cache/pypoetry/virtualenvs/data-engineering-project-s4Rgy75_-py3.8/lib/python3.8/site-packages/dbt/include/starter_project
+[0m03:01:02.574222 [info ] [MainThread]: Profile cultura_ru written to /home/roman/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m03:01:02.575172 [info ] [MainThread]: 
+Your new dbt project "cultura_ru" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m03:01:02.576189 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f495ebf28e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f495b1f68b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f495b1f6910>]}
+[0m03:01:02.576991 [debug] [MainThread]: Flushing usage events

@@ -15,6 +15,7 @@ pyarrow = "^11.0.0"
 prefect-gcp = {extras = ["cloud-storage"], version = "^0.3.0"}
 google-cloud-bigquery = "^3.9.0"
 prefect-github = "^0.1.5"
+dbt-bigquery = "^1.4.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
