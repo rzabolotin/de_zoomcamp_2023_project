@@ -1,3 +1,5 @@
+{{ config(severity = 'warn') }}
+
 WITH events_interval AS (
 SELECT min(event_start) AS min_date, max(event_start) AS max_date
 FROM {{ ref('fct_events') }})

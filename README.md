@@ -96,10 +96,26 @@ In [this flow](data_ingestion/flow_optimization.py) I run bigquery queries to ma
 ## Transformation, making data marts
 After the data is loaded to BigQuery I've made some transformations and created data marts using dbt.
 
-I've created 3 dbt models:
-- **events** - main fact table
-- **organizations** - dimension table
-- **locations** - dimension table
+I've created 4 dbt models:
+- **fct_events** - main fact table
+- **dim_organizations** - dimension table
+- **dim_locations** - dimension table
+- **lnk_event_localations** - link table between events and locations
+
+After running dbt I've got following result (4 tables in prod dataset):
+
+![img.png](media/dbt_result.png)
+
+Dbt generates documentation for each model. Here are some examples of it:
+
+![img.png](media/dbt_docs.png)
+
+![img.png](media/dbt_lineage.png)
+
+![img.png](media/dbt_tests.png)
+
+
+
 
 The dbt project is presented [here](dbt_project/README.md)
 

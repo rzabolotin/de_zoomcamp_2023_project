@@ -17,6 +17,7 @@ Then you can run:
 - `poetry run dbt run` - to run all models
 - `poetry run dbt test` - to run tests
 - `poetry run dbt build` - to run all models and tests
+- `poetry run dbt build --vars 'is_test_run: false'` - to run all models and tests (without test limitations)
 - `poetry run dbt docs generate` - to generate documentation
 - `poetry run dbt docs serve` - to run local server with documentation
 

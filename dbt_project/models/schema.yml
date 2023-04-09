@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: stage
-    schema: stage_dwh
+    schema: {{ env_var('GOOGLE_BQ_STAGE_DATASET') }}
     tables:
       - name: events_partitioned
       - name: event_locales
@@ -47,7 +47,7 @@ models:
       - name: organization__id
         description: "Id of organization, key for organizations table"
 
-  - name: lnk_event_locales
+  - name: lnk_event_locations
     desctiption: "Link table between event and locations. Relations many to many"
     columns:
       - name: event_id
@@ -100,7 +100,7 @@ models:
         tests:
           - not_null
       - name: stats_cinemas
-      - name: stats_cinamaHalls
+      - name: stats_cinemaHalls
 
 
 
