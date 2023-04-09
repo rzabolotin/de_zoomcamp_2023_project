@@ -114,15 +114,21 @@ Dbt generates documentation for each model. Here are some examples of it:
 
 ![img.png](media/dbt_tests.png)
 
-
-
-
 The dbt project is presented [here](dbt_project/README.md)
 
 
 ## Data visualization
-- Superset
-- Looker
+I've created a dashboard in [Google Looker](https://lookerstudio.google.com/) to visualize data.
+
+The report had 3 pages:
+
+![img.png](media/dashboard_1.png)
+
+![img.png](media/dashboard_2.png)
+
+![img.png](media/dashboard_3.png)
+
+Dashboard is shared and it is available by [this link](https://lookerstudio.google.com/reporting/c4ff81c9-0cd5-4aea-a392-03033006cded)
 
 
 ## Poetry
@@ -149,4 +155,6 @@ poetry run python data_ingestion/flow_events.py # run events flow
 poetry run prefect orion start # start orion server
 poetry run prefect agent start -q default # start prefect agent
 poetry run prefect data_ingestion/make_deployments.py # make prefect deployments
+cd dbt_project && poetry run dbt run # run dbt project
+poetry 
 ```
